@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Use arrow keys to move the red square around</h1>
+<canvas width='256' height='256' id="canv" style='border:1px solid #000000;'></canvas>
+
+
+<script>
+
+var player = {
+	xcoord: 128,
+    ycoord: 128,
+    moveright: function() {
+    	player.xcoord += 1;
+        ctx.clearRect(0, 0, c.width, c.height);
+        ctx.fillRect(player.xcoord, player.ycoord, 10, 10);
+        },
+    moveleft: function() {
+    	player.xcoord -= 1;
+        ctx.clearRect(0, 0, c.width, c.height);
+        ctx.fillRect(player.xcoord, player.ycoord, 10, 10);
+        },
+    moveup: function() {
+    	player.ycoord -= 1;
+        ctx.clearRect(0, 0, c.width, c.height);
+        ctx.fillRect(player.xcoord, player.ycoord, 10, 10);
+        },
+    movedown: function() {
+    	player.ycoord += 1;
+        ctx.clearRect(0, 0, c.width, c.height);
+        ctx.fillRect(player.xcoord, player.ycoord, 10, 10);
+        }
+    
+    };
+
+
+var c = document.getElementById("canv");
+var ctx = c.getContext("2d");
+ctx.fillStyle = "#FF0000";
+ctx.fillRect(player.xcoord, player.ycoord, 10, 10);
+
+document.addEventListener("keydown", keyCode, false);
+
+function keyCode(event) {
+    var x = event.keyCode;
+    if (x == 38) {
+        player.moveup();
+    }
+    else if (x == 40) {
+        player.movedown();
+    }
+    else if (x == 37) {
+        player.moveleft();
+    }
+    else if (x == 39) {
+        player.moveright();
+    }
+    
+}
+</script>
+
+</body>
+</html>
