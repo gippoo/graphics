@@ -10,27 +10,31 @@
 
 var player = {
 	xcoord: 128,
-    ycoord: 128,
+    ycoord: 246,
     moveright: function() {
+    	if (player.xcoord != 246) {
     	player.xcoord += 3;
         ctx.clearRect(0, 0, c.width, c.height);
         ctx.fillRect(player.xcoord, player.ycoord, 10, 10);
-        },
+        }},
     moveleft: function() {
+    	if (player.xcoord != 0) {
     	player.xcoord -= 3;
         ctx.clearRect(0, 0, c.width, c.height);
         ctx.fillRect(player.xcoord, player.ycoord, 10, 10);
-        },
+        }},
     moveup: function() {
+    	if (player.ycoord != 0) {
     	player.ycoord -= 3;
         ctx.clearRect(0, 0, c.width, c.height);
         ctx.fillRect(player.xcoord, player.ycoord, 10, 10);
-        },
+        }},
     movedown: function() {
+    	if (player.ycoord != 246) {
     	player.ycoord += 3;
         ctx.clearRect(0, 0, c.width, c.height);
         ctx.fillRect(player.xcoord, player.ycoord, 10, 10);
-        }
+        }}
     
     };
 
