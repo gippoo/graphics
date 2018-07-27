@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Use the arrow keys to move the red square around and eat the food.</h1>
+<canvas width='256' height='256' id="canv" style='border:1px solid #000000;'></canvas>
+
+
+<script>
+function food() {
+	this.w = 8;
+    this.h = 8;
+    this.spawn = function() {
+    	this.x = Math.floor(Math.random() * 248);
+    	this.y = Math.floor(Math.random() * 248);
+    	ctx.fillStyle = "blue";
+		ctx.fillRect(this.x, this.y, this.w, this.h);
+    }
+}
+
+var score = 0
+
+function crash() {
+	var fleft = f1.x;
+    var fright = f1.x + 8;
+    var ftop = f1.y;
+    var fbot = f1.y + 8;
+    var pleft = player.xcoord;
+    var pright= player.xcoord + 10;
+    var ptop = player.ycoord;
+    var pbot = player.ycoord + 10;
+    if ((fbot > ptop) && (ftop < pbot) && (fright > pleft) && (fleft < pright)) {
+    	score += 1
+        document.getElementById('Score').innerHTML = "Score: " + score;
+    	ctx.clearRect(f1.x, f1.y, 8, 8);
+        ctx.fillStyle = "#FF0000";
+        ctx.fillRect(player.xcoord, player.ycoord, 10, 10);
+        f1.spawn()
+    }
+}
+
+var i = 0;
+var roll;
+var randommode = 0;
+
+function toggle() {
+	if (randommode == 0) {
+    	randommode = 1;
+    }
+    else {
+    	randommode = 0;
+    }
+}
+
+function ai() {
+    while (randommode == 1) {
+    	setTimeout(function(){
+    	ai();
+        
+        }, 100)
+    }
+    roll = Math.floor(Math.random() * 4);
+    if (roll == 0) {
+    	player.moveleft()
+    }
+    else if (roll == 1) {
+    	player.moveright()
+    }
+    else if (roll == 2) {
+    	player.moveup()
+    }
+    else {
+    	player.movedown()
+    }
+    console.log(i, roll);
+    i++;
+}        
+           
+var player = {
+	xcoord: 120,
+    ycoord: 120,
+    moveright: function() {
+    	if (player.xcoord < 246) {
+        ctx.clearRect(player.xcoord, player.ycoord, 10, 10);
+    	player.xcoord += 3;
+        ctx.fillStyle = "#FF0000";
+        ctx.fillRect(player.xcoord, player.ycoord, 10, 10);
+        crash();
+        }},
+    moveleft: function() {
+    	if (player.xcoord > 0) {
+        ctx.clearRect(player.xcoord, player.ycoord, 10, 10);
+    	player.xcoord -= 3;
+        ctx.fillStyle = "#FF0000";
+        ctx.fillRect(player.xcoord, player.ycoord, 10, 10);
+        crash();
+        }},
+    moveup: function() {
+    	if (player.ycoord > 0) {
+        ctx.clearRect(player.xcoord, player.ycoord, 10, 10);
+    	player.ycoord -= 3;
+        ctx.fillStyle = "#FF0000";
+        ctx.fillRect(player.xcoord, player.ycoord, 10, 10);
+        crash();
+        }},
+    movedown: function() {
+    	if (player.ycoord < 246) {
+        ctx.clearRect(player.xcoord, player.ycoord, 10, 10);
+    	player.ycoord += 3;
+        ctx.fillStyle = "#FF0000";
+        ctx.fillRect(player.xcoord, player.ycoord, 10, 10);
+        crash();
+        }}
+    
+    };
+    
+var c = document.getElementById("canv");
+var ctx = c.getContext("2d");
+ctx.fillStyle = "#FF0000";
+ctx.fillRect(player.xcoord, player.ycoord, 10, 10);
+
+var f1 = new food();
+f1.spawn();
+
+document.addEventListener("keydown", keyCode, false);
+function keyCode(event) {
+    var x = event.keyCode;
+    if (x == 38) {
+        player.moveup();
+    }
+    else if (x == 40) {
+        player.movedown();
+    }
+    else if (x == 37) {
+        player.moveleft();
+    }
+    else if (x == 39) {
+        player.moveright();
+    }
+    
+}
+
+</script>
+
+<p><h2 id='Score'>Score: 0</h2></p>
+<br><button id='ai' onclick='toggle();ai();'>Random Mode</button>
+
+</body>
+</html>
