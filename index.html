@@ -17,9 +17,7 @@ function food() {
 		ctx.fillRect(this.x, this.y, this.w, this.h);
     }
 }
-
 var score = 0
-
 function crash() {
 	var fleft = f1.x;
     var fright = f1.x + 8;
@@ -39,10 +37,8 @@ function crash() {
     }
 }
 
-var randcount = 0;
 var roll;
 var randommode = 0;
-
 function toggle() {
 	if (randommode == 0) {
     	randommode = 1;
@@ -53,16 +49,12 @@ function toggle() {
         document.getElementById('ai').innerHTML = "Random AI ON";
     }
 }
-
 function ai() {
-    if ((randcount < 10) && (randommode == 1)) {
+    if (randommode == 1) {
     	setTimeout(function(){
     	ai();
         
         }, 40)
-    }
-    if (randcount == 9) {
-    	randcount = 0
     }
     roll = Math.floor(Math.random() * 4);
     if (roll == 0) {
@@ -77,7 +69,7 @@ function ai() {
     else {
     	player.movedown()
     }
-    randcount++;
+    
 }        
            
 var player = {
@@ -122,10 +114,8 @@ var c = document.getElementById("canv");
 var ctx = c.getContext("2d");
 ctx.fillStyle = "#FF0000";
 ctx.fillRect(player.xcoord, player.ycoord, 10, 10);
-
 var f1 = new food();
 f1.spawn();
-
 document.addEventListener("keydown", keyCode, false);
 function keyCode(event) {
     var x = event.keyCode;
@@ -143,7 +133,6 @@ function keyCode(event) {
     }
     
 }
-
 </script>
 
 <p><h2 id='Score'>Score: 0</h2></p>
