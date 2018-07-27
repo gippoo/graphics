@@ -29,9 +29,9 @@ function crash() {
     var pright= player.xcoord + 10;
     var ptop = player.ycoord;
     var pbot = player.ycoord + 10;
-    if (!((fbot < ptop) || (ftop > pbot) || (fright < pleft) || (fleft > pright))) {
+    if ((fbot > ptop) && (ftop < pbot) && (fright > pleft) && (fleft < pright)) {
     	score += 1
-        document.getElementById('Score').innerHTML = "Food Eaten: " + score;
+        document.getElementById('Score').innerHTML = "Score: " + score;
     	ctx.clearRect(f1.x, f1.y, 8, 8);
         ctx.fillStyle = "#FF0000";
         ctx.fillRect(player.xcoord, player.ycoord, 10, 10);
@@ -39,6 +39,47 @@ function crash() {
     }
 }
 
+var randcount = 0;
+var roll;
+var randommode = 0;
+
+function toggle() {
+	if (randommode == 0) {
+    	randommode = 1;
+        document.getElementById('ai').innerHTML = "Random Mode OFF";
+    }
+    else {
+    	randommode = 0;
+        document.getElementById('ai').innerHTML = "Random Mode ON";
+    }
+}
+
+function ai() {
+    if ((randcount < 10) && (randommode == 1)) {
+    	setTimeout(function(){
+    	ai();
+        
+        }, 40)
+    }
+    if (randcount == 9) {
+    	randcount = 0
+    }
+    roll = Math.floor(Math.random() * 4);
+    if (roll == 0) {
+    	player.moveleft()
+    }
+    else if (roll == 1) {
+    	player.moveright()
+    }
+    else if (roll == 2) {
+    	player.moveup()
+    }
+    else {
+    	player.movedown()
+    }
+    randcount++;
+}        
+           
 var player = {
 	xcoord: 120,
     ycoord: 120,
@@ -105,7 +146,8 @@ function keyCode(event) {
 
 </script>
 
-<p><h2 id='Score'>Food Eaten: 0</h2></p>
+<p><h2 id='Score'>Score: 0</h2></p>
+<br><button id='ai' onclick='toggle();ai();'>Random Mode ON</button>
 
 </body>
 </html>
