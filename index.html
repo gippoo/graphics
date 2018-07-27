@@ -46,11 +46,11 @@ var randommode = 0;
 function toggle() {
 	if (randommode == 0) {
     	randommode = 1;
-        document.getElementById('ai').innerHTML = "Random Mode OFF";
+        document.getElementById('ai').innerHTML = "Random AI OFF";
     }
     else {
     	randommode = 0;
-        document.getElementById('ai').innerHTML = "Random Mode ON";
+        document.getElementById('ai').innerHTML = "Random AI ON";
     }
 }
 
@@ -147,7 +147,7 @@ function keyCode(event) {
 </script>
 
 <p><h2 id='Score'>Score: 0</h2></p>
-<br><button id='ai' onclick='toggle();ai();'>Random Mode ON</button>
+<br><button id='ai' onclick='toggle();ai();'>Random AI ON</button>
 
 </body>
 </html>
