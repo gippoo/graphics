@@ -43,10 +43,12 @@ function toggle() {
 	if (randommode == 0) {
     	randommode = 1;
         document.getElementById('ai').innerHTML = "Random AI OFF";
+	document.getElementById("ai2").disabled = true;
     }
     else {
     	randommode = 0;
         document.getElementById('ai').innerHTML = "Random AI ON";
+	document.getElementById("ai2").disabled = false;
     }
 }
 function ai() {
@@ -67,6 +69,42 @@ function ai() {
     	player.moveup()
     }
     else {
+    	player.movedown()
+    }
+    
+}
+	
+var smartmode = 0;
+
+function toggle2() {
+	if (smartmode == 0) {
+    	smartmode = 1;
+        document.getElementById('ai2').innerHTML = "Smart AI OFF";
+	document.getElementById("ai").disabled = true;
+    }
+    else {
+    	smartmode = 0;
+        document.getElementById('ai2').innerHTML = "Smart AI ON";
+	document.getElementById("ai").disabled = false;
+    }
+}
+function ai2() {
+    if (startmode == 1) {
+    	setTimeout(function(){
+    	ai2();
+        
+        }, 40)
+    }
+    if (player.xcoord + 10 <= f1.x) {
+    	player.moveright()
+    }
+    else if (player.xcoord >= f1.x + 8) {
+    	player.moveleft()
+    }
+    else if (player.ycoord >= f1.y + 8) {
+    	player.moveup()
+    }
+    else if (player.ycoord + 8 <= f1.y){
     	player.movedown()
     }
     
@@ -137,6 +175,7 @@ function keyCode(event) {
 
 <p><h2 id='Score'>Score: 0</h2></p>
 <br><button id='ai' onclick='toggle();ai();'>Random AI ON</button>
+<button id='ai2' onclick='toggle2();ai2();'>Smart AI ON</button>
 
 </body>
 </html>
