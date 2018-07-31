@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/5.0.4/math.js"></script>
+</head>
+<body>
+
+<h1>Use the arrow keys to move the red square around and eat the food.</h1>
+<canvas width='256' height='256' id="canv" style='border:1px solid #000000;'></canvas>
+
+
+<script>
+function player() {
+	this.w = 10;
+    this.h = 10;
+    this.x = document.getElementById("canv").width/2-8;
+    this.y = document.getElementById("canv").height/2-8;
+    this.moveright= function() {
+    	if (this.x < 246) {
+        ctx.clearRect(this.x, this.y, 10, 10);
+    	this.x += 3;
+        ctx.fillStyle = "#FF0000";
+        ctx.fillRect(this.x, this.y, 10, 10);
+        crash(this);
+        }},
+    this.moveleft= function() {
+    	if (this.x > 0) {
+        ctx.clearRect(this.x, this.y, 10, 10);
+    	this.x -= 3;
+        ctx.fillStyle = "#FF0000";
+        ctx.fillRect(this.x, this.y, 10, 10);
+        crash(this);
+        }},
+    this.moveup= function() {
+    	if (this.y > 0) {
+        ctx.clearRect(this.x, this.y, 10, 10);
+    	this.y -= 3;
+        ctx.fillStyle = "#FF0000";
+        ctx.fillRect(this.x, this.y, 10, 10);
+        crash(this);
+        }},
+    this.movedown= function() {
+    	if (this.y < 246) {
+        ctx.clearRect(this.x, this.y, 10, 10);
+    	this.y += 3;
+        ctx.fillStyle = "#FF0000";
+        ctx.fillRect(this.x, this.y, 10, 10);
+        crash(this);
+        }}
+    
+    }
+
+    
+    
+    
+function food() {
+	this.w = 8;
+    this.h = 8;
+    this.spawn = function() {
+    	this.x = Math.floor(Math.random() * 248);
+    	this.y = Math.floor(Math.random() * 248);
+    	ctx.fillStyle = "blue";
+		ctx.fillRect(this.x, this.y, this.w, this.h);
+    }
+}
+var score = 0
+function crash(guy) {
+	var fleft = f1.x;
+    var fright = f1.x + 8;
+    var ftop = f1.y;
+    var fbot = f1.y + 8;
+    var pleft = guy.x;
+    var pright= guy.x + 10;
+    var ptop = guy.y;
+    var pbot = guy.y + 10;
+    if ((fbot > ptop) && (ftop < pbot) && (fright > pleft) && (fleft < pright)) {
+    	score += 1
+        document.getElementById('Score').innerHTML = "Score: " + score;
+    	ctx.clearRect(f1.x, f1.y, 8, 8);
+        ctx.fillStyle = "#FF0000";
+        ctx.fillRect(guy.x, guy.y, 10, 10);
+        f1.spawn()
+    }
+}
+var roll;
+var randommode = 0;
+function toggle() {
+	if (randommode == 0) {
+    	randommode = 1;
+        document.getElementById('ai').innerHTML = "Random AI OFF";
+	document.getElementById("ai2").disabled = true;
+    }
+    else {
+    	randommode = 0;
+        document.getElementById('ai').innerHTML = "Random AI ON";
+	document.getElementById("ai2").disabled = false;
+    }
+}
+function ai() {
+    if (randommode == 1) {
+    	setTimeout(function(){
+    	ai();
+        
+        }, 40)
+    }
+    roll = Math.floor(Math.random() * 4);
+    if (roll == 0) {
+    	player.moveleft()
+    }
+    else if (roll == 1) {
+    	player.moveright()
+    }
+    else if (roll == 2) {
+    	player.moveup()
+    }
+    else {
+    	player.movedown()
+    }
+    
+}
+	
+var smartmode = 0;
+function toggle2() {
+	if (smartmode == 0) {
+    	smartmode = 1;
+        document.getElementById('ai2').innerHTML = "Smart AI OFF";
+	document.getElementById("ai").disabled = true;
+    }
+    else {
+    	smartmode = 0;
+        document.getElementById('ai2').innerHTML = "Smart AI ON";
+	document.getElementById("ai").disabled = false;
+    }
+}
+function ai2() {
+    if (smartmode == 1) {
+    	setTimeout(function(){
+    	ai2();
+        
+        }, 40)
+    }
+    if (player.xcoord + 10 <= f1.x) {
+    	player.moveright()
+    }
+    else if (player.xcoord >= f1.x + 8) {
+    	player.moveleft()
+    }
+    else if (player.ycoord >= f1.y + 8) {
+    	player.moveup()
+    }
+    else if (player.ycoord + 8 <= f1.y){
+    	player.movedown()
+    }
+    
+}
+
+var p1 = new player();
+    
+var c = document.getElementById("canv");
+var ctx = c.getContext("2d");
+ctx.fillStyle = "#FF0000";
+ctx.fillRect(p1.x, p1.y, 10, 10);
+var f1 = new food();
+f1.spawn();
+document.addEventListener("keydown", keyCode, false);
+function keyCode(event) {
+    var x = event.keyCode;
+    if (x == 38) {
+        p1.moveup();
+    }
+    else if (x == 40) {
+        p1.movedown();
+    }
+    else if (x == 37) {
+        p1.moveleft();
+    }
+    else if (x == 39) {
+        p1.moveright();
+    }
+    
+}
+</script>
+
+<p><h2 id='Score'>Score: 0</h2></p>
+<br><button id='ai' onclick='toggle();ai();'>Random AI ON</button>
+<button id='ai2' onclick='toggle2();ai2();'>Smart AI ON</button>
+
+</body>
+</html>
