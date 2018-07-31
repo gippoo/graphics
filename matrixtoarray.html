@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/5.0.4/math.js"></script>
+</head>
+<body>
+
+<script>
+function person() {
+	this.brain = [];
+	for (let i = 0; i < 16; i++) {
+    	this.brain.push(2 * Math.random() - 1)
+    }
+    this.brain = math.matrix([this.brain.slice(0,4),this.brain.slice(4,8),this.brain.slice(8,12),this.brain.slice(12,16)])
+    
+}
+
+var p1 = new person();
+console.log(p1.brain);
+
+var rcoords = math.matrix([[-0.5, 1, -1, 0.5]]);
+var mult = math.multiply(rcoords, p1.brain);
+console.log(mult);
+
+console.log(mult.get([0, 0]))
+var arr = [];
+for (let i = 0; i < 4; i++) {
+arr.push(mult.get([0, i]));
+}
+console.log(arr);
+
+</script>
+
+</body>
+</html> 
