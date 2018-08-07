@@ -73,3 +73,81 @@
 
 	</body>
 </html>
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.min.js"></script>
+	</head>
+	<body>
+		<script>
+        	var sheet;
+            var animation = [];
+            var dude;
+            var bg = 255;
+            var bgflag = true;
+			
+            function sprite(ani, x, y, speed) {
+            	this.ani = ani;
+                this.frames = ani.length;
+            	this.index = 0;
+                this.x = x;
+             	this.y = y;
+                this.speed = speed;
+                this.show = function() {
+                	image(this.ani[floor(this.index) % this.frames], this.x, this.y)
+                }
+                this.animate = function() {
+                	this.index += speed;
+                    this.x += 5*speed;
+                    if (this.x > 640) {
+                    	this.x = -100;
+                    }
+                }
+            }
+        	
+        	
+        	function preload() {
+            	sheet = loadImage('https://cdn-images-1.medium.com/max/520/0*v-9KSDYtRcYIoCHv.png');
+        	}
+            
+            function setup() {
+            	createCanvas(640, 480);
+            
+            	for (let i = 0; i < 7; i++) {
+                	let img = sheet.get(74.28*i,0,74.28,85);
+                	animation.push(img);
+            	}
+                
+                for (let i = 0; i < 7; i++) {
+                	let img = sheet.get(74.28*i,85,74.28,85);
+                	animation.push(img);
+            	}
+                
+                for (let i = 0; i < 7; i++) {
+                	let img = sheet.get(74.28*i,170,74.28,85);
+                	animation.push(img);
+            	}
+                
+            	for (let i = 0; i < 6; i++) {
+                	let img = sheet.get(74.28*i,255,74.28,85);
+                	animation.push(img);
+            	}
+                
+
+
+               	dude = new sprite(animation, 0, 240, 1);
+            }
+                
+            
+            function draw () {
+            	background(255);
+				dude.show();
+                dude.animate();
+            }
+
+
+		</script>
+
+	</body>
+</html>
