@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.min.js"></script>
+	</head>
+	<body>
+		<script>
+        	var sheet;
+            var animation = [];
+            var robos = [];
+            var bg = 255;
+            var bgflag = true;
+			
+            function sprite(frames, x, y, speed) {
+            	this.frames = frames;
+            	this.index = 0;
+                this.x = x;
+             	this.y = y;
+                this.speed = speed;
+                this.show = function() {
+                	image(this.frames[floor(this.index) % 7], this.x, this.y)
+                }
+                this.animate = function() {
+                	this.index += speed;
+                    this.x += 2*speed;
+                    if (this.x > 640) {
+                    	this.x = -100;
+                    }
+                }
+            }
+        	
+        	
+        	function preload() {
+            	sheet = loadImage('http://spritetools.com/images/568x418/r1sht.png');
+        	}
+            
+            function setup() {
+            	createCanvas(640, 480);
+            
+            	for (let i = 0; i < 7; i++) {
+                	let img = sheet.get(81.1*i,0,81.1,83.6);
+                	animation.push(img);
+            	}
+                
+
+            	for (let i = 0; i < 5; i++) {
+                	robos[i] = new sprite(animation, 0, i*90, random(0.2,1));
+           		}
+            }
+                
+            
+            function draw () {
+            	background(bg);
+                for (let robo of robos) {
+                	robo.show();
+                	robo.animate();
+                }
+				if (bgflag) {
+                	bg -= 1;
+                    if (bg == 0) {
+                    	bgflag = false;
+                    }
+       			} else {
+                	bg += 1;
+                    if (bg == 255) {
+                    	bgflag = true;
+                    }
+                }
+            }
+
+
+		</script>
+
+	</body>
+</html>
