@@ -151,3 +151,107 @@
 
 	</body>
 </html>
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.dom.min.js"> </script>
+	</head>
+	<body>
+		<script>
+        	var sheet;
+            var animation = [];
+            var dude;
+            var bg = 255;
+            var bgflag = true;
+            var moveX = 0;
+            var moveY = 240;
+            var angle;
+            var speedx, speedy, moveXl = -1, moveXr = 1, moveYt = 239, moveYb = 241;
+			
+            function sprite(ani, x, y, speed) {
+            	this.ani = ani;
+                this.frames = ani.length;
+            	this.index = 9;
+                this.x = x;
+             	this.y = y;
+                this.speed = speed;
+                this.stand = true;
+                this.flip = false;
+                
+                this.show = function() {
+                	if (this.stand) {
+                    image(this.ani[9], this.x, this.y)
+                    } else {
+                	image(this.ani[floor(this.index) % this.frames], this.x, this.y)
+                    }
+                }
+                
+                this.animate = function() {
+					if (!(moveXl < this.x && moveXr > this.x) || !(moveYt < this.y && moveYb > this.y)) {
+                    	this.flip = false;
+                    	this.stand = false;
+                        this.x += speedx;
+                        this.y += speedy;
+                        this.index += 1;
+                    } else {
+                    	this.stand = true;
+                    }
+                }
+            }
+        	
+        	
+        	function preload() {
+            	sheet = loadImage('https://cdn-images-1.medium.com/max/520/0*v-9KSDYtRcYIoCHv.png');
+        	}
+            
+            function setup() {
+            	let can = createCanvas(640, 480);
+                can.style("border:1px solid #000000;");
+            
+            	for (let i = 0; i < 7; i++) {
+                	let img = sheet.get(74.28*i,0,74.28,85);
+                	animation.push(img);
+            	}
+                
+                for (let i = 0; i < 7; i++) {
+                	let img = sheet.get(74.28*i,85,74.28,85);
+                	animation.push(img);
+            	}
+                
+                for (let i = 0; i < 7; i++) {
+                	let img = sheet.get(74.28*i,170,74.28,85);
+                	animation.push(img);
+            	}
+                
+            	for (let i = 0; i < 6; i++) {
+                	let img = sheet.get(74.28*i,255,74.28,85);
+                	animation.push(img);
+            	}
+                
+               	dude = new sprite(animation, 0, 240, 1);
+            }
+            
+            function mouseClicked() {
+            		moveX = mouseX - 35;
+                    moveY = mouseY - 70;
+                	moveXl = mouseX - 35 - dude.speed;
+                    moveXr = mouseX - 35 + dude.speed;
+                    moveYt = mouseY - 70 - dude.speed;
+                    moveYb = mouseY - 70 + dude.speed;
+                    angle = Math.atan2((moveY-dude.y),(moveX-dude.x));
+                    speedx = dude.speed*Math.cos(angle);
+                    speedy = dude.speed*Math.sin(angle);
+            }
+                
+            
+            function draw () {
+            	background(255);
+				dude.show();
+                dude.animate();
+            }
+		</script>
+
+	</body>
+</html>
