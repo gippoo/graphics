@@ -6,12 +6,12 @@
 
 <p id="choices"><button type='button' id='bread' onclick='getBread()'>Get Bread</button>
 <button type='button' id='ham' onclick='getHam()'>Get Ham</button>
-<button type='button' id='lettuce' onclick='getLettuce()'>Get Lettuce</button>
+<button type='button' id='cheese' onclick='getCheese()'>Get Cheese</button>
 </p>
 
 <p id='ingredients'>Bread: <span id='breadCount'>0</span>
 <br>Ham: <span id='hamCount'>0</span>
-<br>Lettuce: <span id='lettuceCount'>0</span></p>
+<br>Cheese: <span id='cheeseCount'>0</span></p>
 <p>Moneyz: $<span id='money'>0</span></p>
 <p>Current Order: <span id='order'></span>
 <button type='button' id='make' onclick='currrecipe.check()'>Make Order</button></p>
@@ -20,76 +20,79 @@
 <script>
 function recipe(name) {
 	document.getElementById('order').innerHTML = name;
-    this.name = name
+    	this.name = name
     
-    if (this.name == orders[0]) {
-    	this.reward = 1.20;
-        this.reqing = "2x Bread, Ham";
-    } else if (this.name == orders[1]) {
-    	this.reward = 1.00;
-        this.reqing = "2x Bread, Lettuce";
-    }
-    
-    document.getElementById('req').innerHTML = this.reqing;
-    
-    this.check = function() {
     	if (this.name == orders[0]) {
-          if (ingredients.bread > 1 && ingredients.ham > 0) {
-              ingredients.bread -= 2;
-              ingredients.ham -= 1;
-              money += this.reward;
-              var fixedmoney = money.toFixed(2);
-              document.getElementById('money').innerHTML = fixedmoney;
-              ingrUpdate();
-              currrecipe = new recipe(orders[Math.floor(Math.random() * 2)]);
-          }
-        } else if (this.name == orders[1]) {
-          	if (ingredients.bread > 1 && ingredients.lettuce > 0) {
-              ingredients.bread -= 2;
-              ingredients.lettuce -= 1;
-              money += this.reward;
-              var fixedmoney = money.toFixed(2)
-              document.getElementById('money').innerHTML = fixedmoney;
-              ingrUpdate();
-              currrecipe = new recipe(orders[Math.floor(Math.random() * 2)]);
-          }
-        }
-    }
-            
+    		this.reward = 1.20;
+        	this.reqing = "2x Bread, Ham";
+    	} else if (this.name == orders[1]) {
+    		this.reward = 1.00;
+        	this.reqing = "2x Bread, Cheese";
+    	} else if (this.name == orders[2]) {
+    		this.reward = 1.50;
+        	this.reqing = "2x Bread, Ham, Cheese";
+   	}
     
-    }
-
-var ingredients = {bread:0, lettuce:0, ham:0};
-var orders = ['Ham Sandwich','Lettuce Sandwich'];
+    	document.getElementById('req').innerHTML = this.reqing;
+    
+    	this.check = function() {
+    		if (this.name == orders[0]) {
+          		if (ingredients.bread > 1 && ingredients.ham > 0) {
+              			ingredients.bread -= 2;
+              			ingredients.ham -= 1;
+              			money += this.reward;
+              			var fixedmoney = money.toFixed(2);
+              			document.getElementById('money').innerHTML = fixedmoney;
+              			ingrUpdate();
+              			currrecipe = new recipe(orders[Math.floor(Math.random() * 3)]);
+          		}
+        	} else if (this.name == orders[1]) {
+          		if (ingredients.bread > 1 && ingredients.cheese > 0) {
+              			ingredients.bread -= 2;
+              			ingredients.cheese -= 1;
+              			money += this.reward;
+              			var fixedmoney = money.toFixed(2)
+              			document.getElementById('money').innerHTML = fixedmoney;
+              			ingrUpdate();
+              			currrecipe = new recipe(orders[Math.floor(Math.random() * 3)]);
+          		}
+        	} else if (this.name == orders[2]) {
+          		if (ingredients.bread > 1 && ingredients.cheese > 0 && ingredients.ham > 0) {
+             			ingredients.bread -= 2;
+              			ingredients.cheese -= 1;
+             			money += this.reward;
+             			var fixedmoney = money.toFixed(2)
+             			document.getElementById('money').innerHTML = fixedmoney;
+              			ingrUpdate();
+              			currrecipe = new recipe(orders[Math.floor(Math.random() * 3)]);
+          		}
+        	}
+    	}
+}
+	
+var ingredients = {bread:0, cheese:0, ham:0};
+var orders = ['Ham Sandwich','Cheese Sandwich', 'Ham&Cheese Sandwich'];
 var money = 0;
-
-
-var currrecipe = new recipe(orders[Math.floor(Math.random() * 2)]);
-
+var currrecipe = new recipe(orders[Math.floor(Math.random() * 3)]);
 
 // FUNCTIONS TO GET INGREDIENTS
 function getBread() {
 	ingredients.bread ++;
-    ingrUpdate();
+    	ingrUpdate();
 }
-
 function getHam() {
 	ingredients.ham ++;
-    ingrUpdate();
+    	ingrUpdate();
 }
-
-function getLettuce() {
-	ingredients.lettuce ++;
-    ingrUpdate();
+function getCheese() {
+	ingredients.cheese ++;
+    	ingrUpdate();
 }
-
 function ingrUpdate() {
 	document.getElementById('breadCount').innerHTML = ingredients.bread;
-    document.getElementById('hamCount').innerHTML = ingredients.ham;
-    document.getElementById('lettuceCount').innerHTML = ingredients.lettuce;
-    }
-
-
+    	document.getElementById('hamCount').innerHTML = ingredients.ham;
+    	document.getElementById('cheeseCount').innerHTML = ingredients.cheese;
+}
 
 </script>
 
