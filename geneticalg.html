@@ -63,6 +63,11 @@
 			scoredPop[i][3] = scoreIndiv(pop[i]);
 			scoredPop[i].reverse();
 		}
+		scoredPop.sort();
+		for (let i = 0; i < scoredPop.length; i++) {
+			scoredPop[i].shift()
+			scoredPop[i].reverse();
+		}
 		return scoredPop;
 	}
 
