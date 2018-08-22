@@ -19,59 +19,59 @@
 <p id='individuals'></p>
 
 <script>
-var bobas = [];
+	var bobas = [];
 
-var boba = function() {
-	this.cost = (Math.random() * 3 + 2).toFixed(2);
-}
+	var boba = function() {
+		this.cost = (Math.random() * 3 + 2).toFixed(2);
+	}
 
-for (let i = 0; i < 9; i++) {
-	bobas[i] = new boba();
-}
+	for (let i = 0; i < 9; i++) {
+		bobas[i] = new boba();
+	}
 
-for (let i = 1; i <= 9; i++) {
-	document.getElementById('cost'+i).innerHTML = '$'+bobas[i-1].cost;
-}
+	for (let i = 1; i <= 9; i++) {
+		document.getElementById('cost'+i).innerHTML = '$'+bobas[i-1].cost;
+	}
 
-function createIndividual() {
-	let c1 = Math.floor(Math.random() * 9) + 1;
-    let c2 = Math.floor(Math.random() * 9) + 1;
-    let c3 = Math.floor(Math.random() * 9) + 1;
-    return [c1,c2,c3];
-}
+	function createIndividual() {
+		let c1 = Math.floor(Math.random() * 9) + 1;
+		let c2 = Math.floor(Math.random() * 9) + 1;
+		let c3 = Math.floor(Math.random() * 9) + 1;
+		return [c1,c2,c3];
+	}
 
-function createPopulation(size) {
-	let newpop = [];
-	for (let i = 0; i < size; i++) {
-    	newpop[i] = createIndividual();
-    }
-    return newpop;
-}
+	function createPopulation(size) {
+		let newpop = [];
+		for (let i = 0; i < size; i++) {
+		newpop[i] = createIndividual();
+		}
+	return newpop;
+	}
 
-var x = createPopulation(5);
-for (let i = 0; i < x.length; i++) {
-	document.getElementById('individuals').innerHTML += '['+x[i]+'] &nbsp&nbsp';
-}
+	var x = createPopulation(5);
+	for (let i = 0; i < x.length; i++) {
+		document.getElementById('individuals').innerHTML += '['+x[i]+'] &nbsp&nbsp';
+	}
 
-function scoreIndiv(indiv) {
-	let total = 0;
-	for (let i = 0; i < 3; i++) {
-    	total += parseFloat(bobas[indiv[i]-1].cost);
-    }
-    return Math.abs(10 - total);
-}
+	function scoreIndiv(indiv) {
+		let total = 0;
+		for (let i = 0; i < 3; i++) {
+		total += parseFloat(bobas[indiv[i]-1].cost);
+		}
+	return Math.abs(10 - total);
+	}
 
-function scorePopulation(pop) {
-	let scoredPop = [];
-    for (let i = 0; i < pop.length; i++) {
-    	scoredPop[i] = pop[i];
-    	scoredPop[i][3] = scoreIndiv(pop[i]);
-        scoredPop[i] = scoredPop[i].reverse();
-    }
-    return scoredPop;
-}
+	function scorePopulation(pop) {
+		let scoredPop = [];
+		for (let i = 0; i < pop.length; i++) {
+			scoredPop[i] = pop[i];
+			scoredPop[i][3] = scoreIndiv(pop[i]);
+			scoredPop[i] = scoredPop[i].reverse();
+		}
+		return scoredPop;
+	}
 
-console.log(scorePopulation(x));
+	console.log(scorePopulation(x));
 
 
 </script>
