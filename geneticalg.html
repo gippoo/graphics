@@ -20,19 +20,19 @@
 
 <script>
 	var bobas = [];
-
 	var boba = function() {
 		this.cost = (Math.random() * 3 + 2).toFixed(2);
 	}
-
+	
+	// Show menu with prices
 	for (let i = 0; i < 9; i++) {
 		bobas[i] = new boba();
 	}
-
 	for (let i = 1; i <= 9; i++) {
 		document.getElementById('cost'+i).innerHTML = '$'+bobas[i-1].cost;
 	}
 
+	// Evolution functions
 	function createIndividual() {
 		let c1 = Math.floor(Math.random() * 9) + 1;
 		let c2 = Math.floor(Math.random() * 9) + 1;
@@ -43,20 +43,15 @@
 	function createPopulation(size) {
 		let newpop = [];
 		for (let i = 0; i < size; i++) {
-		newpop[i] = createIndividual();
+			newpop[i] = createIndividual();
 		}
 	return newpop;
-	}
-
-	var x = createPopulation(5);
-	for (let i = 0; i < x.length; i++) {
-		document.getElementById('individuals').innerHTML += '['+x[i]+'] &nbsp&nbsp';
 	}
 
 	function scoreIndiv(indiv) {
 		let total = 0;
 		for (let i = 0; i < 3; i++) {
-		total += parseFloat(bobas[indiv[i]-1].cost);
+			total += parseFloat(bobas[indiv[i]-1].cost);
 		}
 	return Math.abs(10 - total);
 	}
@@ -71,6 +66,11 @@
 		return scoredPop;
 	}
 
+	// Create and display initial population
+	var x = createPopulation(5);
+	for (let i = 0; i < x.length; i++) {
+		document.getElementById('individuals').innerHTML += '['+x[i]+'] &nbsp&nbsp';
+	}
 	console.log(scorePopulation(x));
 
 
