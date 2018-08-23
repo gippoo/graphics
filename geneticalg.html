@@ -4,19 +4,21 @@
 <h1>Genetic Algorithm Example... w/ Milk Tea!</h1>
 <h2>Drink Menu</h2>
 <hr>
-<p>Boba 1...<span id=cost1></span></p>
-<p>Boba 2...<span id=cost2></span></p>
-<p>Boba 3...<span id=cost3></span></p>
-<p>Boba 4...<span id=cost4></span></p>
-<p>Boba 5...<span id=cost5></span></p>
-<p>Boba 6...<span id=cost6></span></p>
-<p>Boba 7...<span id=cost7></span></p>
-<p>Boba 8...<span id=cost8></span></p>
-<p>Boba 9...<span id=cost9></span></p>
+<p>Boba 1... <span id=cost1></span></p>
+<p>Boba 2... <span id=cost2></span></p>
+<p>Boba 3... <span id=cost3></span></p>
+<p>Boba 4... <span id=cost4></span></p>
+<p>Boba 5... <span id=cost5></span></p>
+<p>Boba 6... <span id=cost6></span></p>
+<p>Boba 7... <span id=cost7></span></p>
+<p>Boba 8... <span id=cost8></span></p>
+<p>Boba 9... <span id=cost9></span></p>
 <hr>
 <h2>Evolution</h2>
 <h3>Generation <span id='genNum'>0</span></h3>
 <p id='individuals'></p>
+<p id='scored'></p>
+<p id='survivors'></p>
 
 <script>
 	var bobas = [];
@@ -68,15 +70,44 @@
 			scoredPop[i].shift()
 			scoredPop[i].reverse();
 		}
+		for (let i = 0; i < scoredPop.length; i++) {
+			document.getElementById('scored').innerHTML += '['+scoredPop[i]+'] &nbsp&nbsp';
+		}
 		return scoredPop;
 	}
+	
+	function killWeak(pop, percent) {
+		let survivors = pop.slice(0,Math.ceil(pop.length * (1-percent)));
+		for (let i = 0; i < survivors.length; i++) {
+			document.getElementById('survivors').innerHTML += '['+survivors[i]+'] &nbsp&nbsp';
+		}
+		return survivors;
+	}
 
-	// Create and display initial population
+	function makeBabies(parents, mutationRate) {
+		let p1 = Math.floor(Math.random() * survivors.length);
+		let p2 = Math.floor(Math.random() * survivors.length);
+		while (p1 == p2) {
+			p2 = Math.floor(Math.random() * survivors.length);
+		}
+		let cutoff = Math.floor(Math.random() * 2) + 1;
+		let child = [];
+		for (let i = 0; i < cutoff; i++) {
+			child[i] = parents[p1][i];
+		}
+		for (let i = cutoff; i < 3; i++) {
+			child[i] = parents[p2][i];
+		}
+		return child
+	}
+	
+	// Carry out evolution process
 	var x = createPopulation(5);
 	for (let i = 0; i < x.length; i++) {
 		document.getElementById('individuals').innerHTML += '['+x[i]+'] &nbsp&nbsp';
 	}
-	console.log(scorePopulation(x));
+	x = scorePopulation(x);
+	var survivors = killWeak(x, 0.8);
 
 
 </script>
