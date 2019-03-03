@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.min.js"></script>
+	</head>
+<body>
+<script>
+var things = []
+var creationTimer = Math.random()*40 + 10;
+
+function setup() {
+	createCanvas(800, 600);
+    background('black');
+    for (let i = 0; i < 10; i++) {
+    	things.push(new Blob());
+    }
+    stroke(100)
+    strokeWeight(2);
+}
+
+class Blob {
+    constructor() {
+    	this.x = random(width);
+        this.y = random(height);
+        this.size = random(10, 20);
+        this.speed = random(.5,1.5);
+        this.id = random(-1000,1000);
+        this.shortestdist;
+        this.remove = false;
+        this.lifespan = random(1000,2000);
+        this.r = random(255);
+        this.g = random(255);
+        this.b = random(255);
+        this.top = this.y;
+        this.bot = this.y + this.size;
+        this.left = this.x;
+        this.right = this.x + this.size;
+    }
+    
+    show() {
+        fill(this.r,this.g,this.b,floor(this.lifespan/9));
+    	rect(this.x, this.y, this.size, this.size);
+    }
+    
+    move(blobs) {
+    	this.shortestdist = 100000;
+        for (let other of blobs) {
+        	let dist = sqrt(sq(this.x - other.x) + sq(this.y-other.y));
+        	if (dist < this.shortestdist && this.size > other.size && this.id != other.id) {
+            	this.shortestdist = dist;
+                var newx = other.x;
+                var newy = other.y;
+            }
+        }
+        
+        if (this.x > newx) {
+        	this.x -= this.speed;
+        } else if (this.x < newx) {
+        	this.x += this.speed;
+        }
+        
+        if (this.y > newy) {
+        	this.y -= this.speed;
+        } else if (this.y < newy) {
+        	this.y += this.speed;
+        }
+        
+        this.top = this.y;
+        this.bot = this.y + this.size;
+        this.left = this.x;
+        this.right = this.x + this.size;
+        
+    }
+    
+    removecheck(blobs) {
+    	for (let i of blobs) {
+            if (this.size > i.size && this.right >= i.left && this.left <= i.right && this.top <= i.bot && this.bot >= i.top) {
+                i.remove = true;
+                this.size += 0.2 * i.size;
+                this.lifespan += i.size;
+            }
+        }
+    }
+    
+    merge() {
+        for (let i = 0; i < things.length; i++) {
+        	if (things[i].remove) {
+            	things.splice(i,1);
+            }
+        }
+    }
+
+}
+
+function dying() {
+	for (let thing of things) {
+    	thing.lifespan -= 1;
+        if (thing.lifespan <= 0) {
+        	thing.remove = true;
+        }
+    }
+}
+
+function createBlob() {
+	creationTimer -= 1
+	if (creationTimer <= 0) {
+		things.push(new Blob());
+        creationTimer = random(10,50);
+    }
+}
+
+function draw() {
+	background('black');
+    for (let thing of things) {
+		thing.show();
+        thing.move(things);
+        thing.removecheck(things);
+    }
+    dying();
+    for (let thing of things) {
+		thing.merge();
+    }
+    createBlob();
+}
+</script>
+</body>
+</html> 
