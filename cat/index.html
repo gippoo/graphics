@@ -8,7 +8,8 @@
 
 
 <body>
-  <script>var sheet;
+  <script>
+    var sheet;
     var furries = [];
     var spriteSheet = [];
     var raceStart = false;
@@ -50,7 +51,7 @@
       frameRate(5);
       raceButton = createButton('Start Race');
       raceButton.mousePressed(startRace);
-      raceButton.position(0,height+20);
+      raceButton.position(20,height+20);
       textSize(32);
 
       for (let i = 0; i < 2; i++) {
@@ -77,6 +78,7 @@
     function startRace() {
       if (!raceOver) {
        raceStart = true;
+       raceButton.hide();
       }
     }
 
@@ -102,6 +104,7 @@
         furries[i] = new cat(i*160+60,catIDs[i]);
       }
       raceOver = false;
+      raceButton.show();
     }
   </script>
 </body>
