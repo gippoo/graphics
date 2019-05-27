@@ -8,30 +8,39 @@
 
 
 <body>
-  <script>
-    var sheet;
+  <script>var sheet;
     var furries = [];
     var spriteSheet = [];
-
+    var raceStart = false;
+    var raceOver = false;
+    var raceButton;
+    var catIDs = ['Top Cat', 'Mid Cat', 'Bot Cat'];
+    var winner;
 
     function preload() {
       sheet = loadImage('https://gippoo.github.io/graphics/cat.png');
     }
 
-    function cat() {
+    function cat(yCoord, id) {
       this.x = 608;
-      this.y = random(32,448);
-      this.speed = random(3,20);
-  
+      this.y = yCoord;
+      this.speed = random(10,20);
+      this.id = id;
+
       this.move = function() {
-        this.x-=this.speed;
-        if (this.x < -32) {
-          this.x = 640;
+        if (raceStart) {
+          if (this.x > -32) {
+            this.x-=this.speed;
+          }
         }
       }
-  
+
       this.show = function() {
-        image(spriteSheet[frameCount%2],this.x, this.y)
+        if (raceStart == true) {
+          image(spriteSheet[frameCount%2],this.x, this.y)
+        } else {
+          image(spriteSheet[0],this.x, this.y)
+        }
       }
     }
 
@@ -39,6 +48,9 @@
       let can = createCanvas(640, 480);
       can.style("border:1px solid #000000;");
       frameRate(5);
+      raceButton = createButton('Start Race');
+      raceButton.mousePressed(startRace);
+      textSize(32);
 
       for (let i = 0; i < 2; i++) {
         let img = sheet.get(32*i,0,32,32);
@@ -46,7 +58,7 @@
       }
 
       for (let i = 0; i < 3; i++) {
-        furries[i] = new cat();
+        furries[i] = new cat(i*160+60,catIDs[i]);
       }
 
     }
@@ -56,9 +68,40 @@
       for (let furry of furries) {
         furry.show();
         furry.move();
+        checkWinner(furry);
+        showWinner();
       }
     }
-    
-</script>
+
+    function startRace() {
+      if (!raceOver) {
+       raceStart = true;
+      }
+    }
+
+    function checkWinner(afurry) {
+      if (afurry.x < 0 & raceStart == true) {
+        raceStart = false;
+        raceOver = true;
+        setTimeout(reset,5000);
+        winner = afurry.id;
+      }
+    }
+
+    function showWinner() {
+      if (raceOver) {
+        s = 'Winner: ' + winner;
+        text(s,200,50);
+      }
+    }
+
+    function reset() {
+      furries = [];
+      for (let i = 0; i < 3; i++) {
+        furries[i] = new cat(i*160+60,catIDs[i]);
+      }
+      raceOver = false;
+    }
+  </script>
 </body>
 </html> 
