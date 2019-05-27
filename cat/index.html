@@ -19,7 +19,7 @@
     }
 
     function cat() {
-      this.x = random(0,640);
+      this.x = 608;
       this.y = random(32,448);
       this.speed = random(3,20);
   
@@ -45,7 +45,7 @@
         spriteSheet.push(img);
       }
 
-      for (let i = 0; i < random(5,10); i++) {
+      for (let i = 0; i < 3; i++) {
         furries[i] = new cat();
       }
 
