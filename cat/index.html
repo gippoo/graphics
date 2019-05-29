@@ -31,7 +31,7 @@
 
       this.move = function() {
         if (raceStart) {
-          if (this.x >= 0) {
+          if (this.x >= 32) {
             this.x-=this.speed;
           }
         }
@@ -84,7 +84,7 @@
     }
 
     function checkWinner(afurry) {
-      if (afurry.x < 0 & raceStart == true) {
+      if (afurry.x < 32 & raceStart == true) {
         raceStart = false;
         raceOver = true;
         setTimeout(reset,5000);
