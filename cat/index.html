@@ -19,7 +19,8 @@
     var winner;
 
     function preload() {
-      sheet = loadImage('https://gippoo.github.io/graphics/cat.png');
+      sheet = loadImage('https://gippoo.github.io/graphics/cat.png')
+      backG = loadImage('https://gippoo.github.io/graphics/cat/catbg.png');
     }
 
     function cat(yCoord, id) {
@@ -66,7 +67,7 @@
     }
 
     function draw() {
-      background(255);
+      image(backG);
       for (let furry of furries) {
         furry.show();
         furry.move();
