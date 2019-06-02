@@ -56,13 +56,13 @@
       raceButton.position(20,height+20);
       textSize(32);
       for (let i = 0; i < 2; i++) {
-        let img = sheet.get(41*i,0,41,32);
+        let img = sheet.get(41*i,0,41,36);
         spriteSheet.push(img);
       }
       for (let i = 0; i < 3; i++) {
         furries[i] = new cat(i*160+60,catIDs[i]);
       }
-      resting = sheet.get(82,0,41,32);
+      resting = sheet.get(82,0,41,36);
     }
     function draw() {
       image(backG,0,0);
