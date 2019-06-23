@@ -2,8 +2,12 @@
 <html>
 
 <head>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.dom.min.js"> </script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gary Ip - Cat Racing</title>
+<link rel="shortcut icon" href="https://github.com/gippoo/gippoo.github.io/raw/master/favicon.ico" type="image/x-icon">
+<link rel="icon" href="https://github.com/gippoo/gippoo.github.io/raw/master/favicon.ico" type="image/x-icon">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.dom.min.js"> </script>
 </head>
 
 
@@ -90,7 +94,7 @@
     }
     function showWinner() {
       if (raceOver) {
-        s = 'Winner: ' + winner;
+        s = winner+' Wins!';
         text(s,200,50);
       }
     }
